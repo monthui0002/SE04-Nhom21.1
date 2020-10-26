@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	frameRate="30"
+	applicationComplete="initCode()">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.jkgh.jvm.runtime.JVMRuntime;
+			import com.jkgh.jvm.runtime.execution.JVMObject;
+			import com.jkgh.jvm.runtime.execution.control.FrameExecutionContext;
+			import com.jkgh.jvm.tools.JVMTools;
+			import com.jkgh.jvm.tools.Logger;
+			
+			import flashx.textLayout.formats.TextLayoutFormat;
+			
+			import spark.components.TextArea;
+			import spark.components.TextInput;
+			import spark.layouts.VerticalLayout;
+			
+			private var textArea:TextArea;
+			private var textField:TextInput;
+			
+			private var queueWaiter:Function;
+			private var messageQueue:Vector.<JVMObject>;
+			
+			private var ajvm:JVMRuntime;
+
+			
+			public function initCode():void {
+				this.setStyle("backgroundColor", 0xff444444);
+				
+				var l:VerticalLayout = new VerticalLayout();
+				l.paddingBottom = l.paddingLeft = l.paddingRight = l.paddingTop = l.gap = 10;
+				this.layout = l;
+
+				this.textArea = new TextArea();
+				textArea.editable = false;
+				textArea.percentWidth = 100;
+				textArea.percentHeight = 100;
+				addElement(textArea);
+			
+				this.textField = new TextInput();
+				textField.percentWidth = 100;
+				addElement(textField);
+				
+				textField.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				
+				focusManager.setFocus(textField);
+				
+				this.messageQueue = new Vector.<JVMObject>();
+				
+				initAJVM();
+			}
+			
+			private function initAJVM():void {
+				
+				this.ajvm = new JVMRuntime();
+				ajvm.addToClasspath("java/asrt/bin");
+				ajvm.addToClasspath("java/sampleRemotingLib/bin");
+				ajvm.addToClasspath("java/chatSample/bin");
+				ajvm.setMillisecondsPerFrame(30);
+				
+				var logLevelValue:int = Logger.SEVERE;
+				
+				var logLevel:String = ExternalInterface.call("eval", "document.location.href");
+				var lioq:int = logLevel.lastIndexOf('?');
+				if (lioq != -1) {
+					logLevel = logLevel.substring(lioq+1);
+					if (Logger[logLevel] != null) {
+						logLevelValue = Logger[logLevel];
+					}
+				}
+								
+				var internalLog:Logger = Logger.getLogger("AJVMInternal");
+				internalLog.setLevel(logLevelValue);
+				internalLog.setAppender(function(s:String):void {
+					ExternalInterface.call("console.log", s);
+				});
+				
+				ajvm.registerNative("com/jkgh/jvm/test/Main:writeMessage(Ljava/lang/String;)V", function(currentFrame:FrameExecutionContext, args:Vector.<Object>, onReturn:Function):void {
+					var string:String = JVMTools.readJVMString((JVMObject)(args[0]));
+					textArea.appendText(string+"\n");
+					onReturn(null);
+				});
+				
+				ajvm.registerNative("com/jkgh/jvm/test/Main:readMessage()Ljava/lang/String;", function(currentFrame:FrameExecutionContext, args:Vector.<Object>, onReturn:Function):void {
+					if (messageQueue.length > 0) {
+						var ret:JVMObject = messageQueue[0];
+						messageQueue.splice(0, 1);
+						onReturn(ret);
+					} else {
+						queueWaiter = onReturn;
+					}
+				});
+				
+				ajvm.executeMain("com.jkgh.jvm.test.Main", Vector.<String>(["foreach.pl", "23432", "Flash AJVM Guest "+(int)(Math.random()*10)]));
+			}
+			
+			private function onKeyDown(event:KeyboardEvent):void {
+				if (event.charCode == 13) {
+					sendMessage(textField.text);
+					textField.text = "";
+				}
+			}
+			
+			private function sendMessage(text:String):void {
+				var jvmString:JVMObject = JVMTools.createJVMStringObject(ajvm.getStringClass(), ajvm.getCharArrayClass(), text);
+				if (queueWaiter != null) {
+					queueWaiter(jvmString);
+					queueWaiter = null;	
+				} else {
+					messageQueue.push(jvmString);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+</s:Application>
