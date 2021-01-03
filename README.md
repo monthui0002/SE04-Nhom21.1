@@ -137,7 +137,7 @@ Sau quá trình không ngừng nghỉ tìm kiếm, nghiên cứu các nguồn t�
 - Kiến trúc JVM và cách nó vận hành
 - Cách cài đặt/sử dụng thử một JVM đơn giản được xây dựng trên nền tảng ngôn ngữ ActionScript3
 
-*Tập thể nhóm SE04-21.1 qua đây muốn gủi đến thầy Bùi Sỹ Nguyên lời cảm ơn chân thành nhất. Chúc thầy luôn mạnh khỏe và công tác gặt hái được nhiều thành công!*
+*Tập thể nhóm SE04-21.1 qua đây muốn gửi đến thầy Bùi Sỹ Nguyên lời cảm ơn chân thành nhất. Chúc thầy luôn mạnh khỏe và công tác gặt hái được nhiều thành công!*
 ---
 ## :large_blue_diamond: *Tài liệu tham khảo*
 1. *What is Java Virtual Machine (http://net-informations.com/java/intro/jvm.htm)*
