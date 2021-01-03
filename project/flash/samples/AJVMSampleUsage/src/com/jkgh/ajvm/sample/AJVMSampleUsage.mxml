@@ -64,7 +64,10 @@
 				ajvm.setMillisecondsPerFrame(30);
 				
 				var logLevelValue:int = Logger.SEVERE;
-				
+
+
+
+
 				var logLevel:String = ExternalInterface.call("eval", "document.location.href");
 				var lioq:int = logLevel.lastIndexOf('?');
 				if (lioq != -1) {
@@ -73,7 +76,7 @@
 						logLevelValue = Logger[logLevel];
 					}
 				}
-								
+
 				var internalLog:Logger = Logger.getLogger("AJVMInternal");
 				internalLog.setLevel(logLevelValue);
 				internalLog.setAppender(function(s:String):void {
