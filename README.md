@@ -85,19 +85,19 @@ Các máy ảo Java (JVM) định nghĩa Runtime Data Areas khác nhau được 
 
 ##### Execution Engine
 Đây là cốt lõi của JVM. Execution Engine có thể giao tiếp với các vùng nhớ khác nhau của JVM. Mỗi luồng của một ứng dụng Java đang chạy là một execution riêng biệt. bytecode được gán cho Runtime Data Areas trong JVM thông qua Class Loader được thực thi bởi xecution Engine.
-- Interpreter
+##### Interpreter
 Đọc, thông dịch và thực thi các bytecode instructions từng dòng một. Do nó thông dịch và thực thi từng dòng một nên công việc thông dịch bytcode được thực hiện một cách nhanh chóng nhưng thực thi kết quả thì lại chậm. Đó là một nhược điểm của ngôn ngữ thông dịch. 
 
-- JIT Compiler
+##### JIT Compiler
 JIT Compiler chuyển đổi mã bytecode thành biểu thức cấp trung gian, IR (Biểu diễn trung gian), để thực hiện tối ưu hóa, và sau đó chuyển đổi biểu thức thành native code. Trình biên dịch JIT đã được giới thiệu để bù đắp những nhược điểm của trình thông dịch. Mục đích chính của trình biên dịch JIT là cải thiện hiệu suất. Trình biên dịch JIT duy trì một số lượng riêng biệt cho mọi phương thức trong nó. Bất cứ khi nào JVM chạy qua bất kỳ lệnh gọi phương thức nào, trước tiên phương thức đó sẽ được trình thông dịch thông dịch một cách bình thườn rồi trình biên dịch JIT tăng biến đếm tương ứng.
 
-- Garbage Collector
+##### Garbage Collector
 Garbage Collector (GC) là một tiến trình nhằm mục đích giải phóng bộ nhớ bị chiếm dụng mà không còn được sử dụng bởi bất kỳ đối tượng Java có thể truy cập nào và là một phần thiết yếu của hệ thống quản lý bộ nhớ động của máy ảo Java (JVM). Tất cả các đối tượng Java sẽ tự động lấy bộ nhớ mà chúng cần khi chúng được tạo ra và khi đối tượng không còn cần nữa, tiến trình Java Garbage Collection sẽ lấy lại bộ nhớ. Điều đó có nghĩa là GC đã theo dõi các live object và mọi thứ được chỉ định khác.
 
-- Native Method Interface
+##### Native Method Interface
 Native methods cho phép bạn sử dụng mã từ các ngôn ngữ khác như C hoặc C ++ trong mã java của bạn. Bạn sử dụng chúng khi java không cung cấp chức năng mà bạn cần.
 
-- Native Method Libraries
+##### Native Method Libraries
 Native Method Libraries là tập hợp các Native Libraries được yêu cầu cho Execution Engine .
 
 ## :large_blue_diamond: **Tìm hiểu cách sử dụng một JVM đơn giản(AJVM)**
@@ -110,25 +110,25 @@ Thực hiện cài đặt, chạy thử một JVM đơn giản được phát tr
     - Trả lời những câu hỏi hiểu biết ban đầu về Java Virtual Machine và kiến trúc của một JVM
     - Khắc phục những lỗi còn xảy ra trong mã nguồn mà giáo viên cung cấp
 2. Công việc riêng:
-
-##### Đặng Quang Vinh:
-- Thực hiện cài đặt mã nguồn AJVM
-- Tìm hiểu, sửa những lỗi còn tồn tại
-- Lên kế hoạch thực hiện các công việc cần thiết
-- Viết báo cáo file markdown README.md
-
-##### Nguyễn Công Hậu:
-- Thực hiện cài đặt mã nguồn AJVM
-- Thực hiện báo cáo file word
-- Nghiên cứu vai trò của JVM đối với ngôn ngữ Java
-
-##### Phạm Văn Khải:
-- Tìm hiểu và dịch bài báo
-- Thực hiện cài AJVM
-
-##### Nguyễn Văn Huy:
-- Thực hiện cài đặt mã nguồn AJVM
-- Tìm hiểu thêm về JVM theo các nguồn khác bài báo
+    
+    ##### Đặng Quang Vinh:
+    - Thực hiện cài đặt mã nguồn AJVM
+    - Tìm hiểu, sửa những lỗi còn tồn tại
+    - Lên kế hoạch thực hiện các công việc cần thiết
+    - Viết báo cáo file markdown README.md
+    
+    ##### Nguyễn Công Hậu:
+    - Thực hiện cài đặt mã nguồn AJVM
+    - Thực hiện báo cáo file word
+    - Nghiên cứu vai trò của JVM đối với ngôn ngữ Java
+    
+    ##### Phạm Văn Khải:
+    - Tìm hiểu và dịch bài báo
+    - Thực hiện cài AJVM
+    
+    ##### Nguyễn Văn Huy:
+    - Thực hiện cài đặt mã nguồn AJVM
+    - Tìm hiểu thêm về JVM theo các nguồn khác bài báo
 
 ## :large_blue_diamond: **Tổng kết** 
 Sau quá trình không ngừng nghỉ tìm kiếm, nghiên cứu các nguồn tài liệu cùng với sự giúp đỡ của thầy Bùi Sỹ Nguyên, nhóm đã trau dồi, bổ sung thêm được một lượng lớn kiến thức về:
