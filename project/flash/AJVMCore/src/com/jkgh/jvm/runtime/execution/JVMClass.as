@@ -112,9 +112,12 @@ package com.jkgh.jvm.runtime.execution {
 			}
 			
 			this.methods = new Vector.<JVMMethod>();
+			trace("start loop")
 			for each (var m:MethodInfo in parsedInfoRem.getMethodInfos()) {
 				methods.push(JVMMethod.fromInfo(classLoadingContext, this, m));
 			}
+			trace(methods.length)
+			trace("Finish loop")
 		}
 		
 		public function getSuperClass():JVMClass {
